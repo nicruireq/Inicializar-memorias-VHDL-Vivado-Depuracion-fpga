@@ -535,10 +535,10 @@ funcionamiento del circuito en la FPGA. Para ello iremos seleccionando
 diferentes direcciones con los switches y observaremos su contenido
 mediante los LED.
 
-![Figura 17. Contenido dirección 00h](media/fig17.jpeg "Figura 17. Contenido dirección 00h")
+![Figura 17. Contenido dirección 00h](media/fig17.jpg "Figura 17. Contenido dirección 00h")
 ##### Figura 17. Contenido dirección 00h <!-- omit in toc -->
 
-![Figura 18. Contenido dirección 01h](media/fig18.jpeg "Figura 18. Contenido dirección 01h")
+![Figura 18. Contenido dirección 01h](media/fig18.jpg "Figura 18. Contenido dirección 01h")
 ##### Figura 18. Contenido dirección 01h <!-- omit in toc -->
 
 # Depuración del hardware 
