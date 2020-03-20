@@ -3,8 +3,7 @@
 
 Nicolás Ruiz Requejo (Autor)
 
-![](media/image1.jpg){width="1.3423129921259842in"
-height="0.4696434820647419in"}
+![](media/license.jpg)
 
 Aqui va la tabla de Contenido 
 
@@ -33,9 +32,9 @@ Los mecanismos presentes incluyen:
     dimensión.
 
 Los constructores mencionados escriben y leen datos en formato binario
-dependiendo de la herramienta utilizada. Por ejemplo, Vivado® de Xilinx
+dependiendo de la herramienta utilizada. Por ejemplo, Vivado&reg; de Xilinx
 puede escribir y leer enteros de un fichero con VHDL en un formato
-distinto del que usa Quartus® de Intel. Por ello para lograr la
+distinto del que usa Quartus&reg; de Intel. Por ello para lograr la
 interoperabilidad entre diferentes herramientas se usarán solo ficheros
 de texto plano. E incluirán solo los tipos y operaciones que
 proporcionan los paquetes "textio", de la biblioteca "std" y
@@ -44,12 +43,12 @@ proporcionan los paquetes "textio", de la biblioteca "std" y
 En general, las operaciones de lectura/escritura de ficheros en VHDL no
 son sintetizables, pero sí permitidas en simulación, si bien algunas
 herramientas permiten la lectura de ficheros para síntesis. A lo largo
-de este tutorial se muestran las formas de realizarlo en Vivado® con
+de este tutorial se muestran las formas de realizarlo en Vivado&reg; con
 proyectos en VHDL93 y VHDL2008.
 
 ## Inicialización de RAM en VHDL93 
 
-Comenzamos creando un nuevo proyecto en Vivado® *File \> Project \> New
+Comenzamos creando un nuevo proyecto en Vivado&reg; *File \> Project \> New
 \> next*
 
 Lo llamaremos "RAM\_TEST\_93", hacemos click en el botón "Next" y
@@ -60,13 +59,16 @@ Artix-7 xc7a100tcsg324-1; finalizamos.
 
 Nos pedirá introducir las definiciones de puertos, lo ignoramos.
 
-![Figura 1](media/image2.jpg "Figura 1")
+![Figura 1](media/image1.jpg "Figura 1")
+[Figura 1][fig1]
 
-Cuando creamos un fichero VHDL, por defecto Vivado® lo crea para
+
+Cuando creamos un fichero VHDL, por defecto Vivado&reg; lo crea para
 sintetizarlo según el estándar VHDL93. Podemos comprobarlos mirando las
 propiedades del fichero, ver figura 2.
 
-![Figura 2. Versión de VHDL](media/image3.jpg)
+![Figura 2. Versión de VHDL](media/image2.jpg "Figura 2. Versión de VHDL")
+[Figura 2. Versión de VHDL][fig2]
 
 Para este tutorial, utilizaremos la descripción de una memoria RAM de
 tipo *write-first*. Copie el siguiente código:
@@ -91,20 +93,20 @@ architecture Behavioral of RAM_WF_93 is
     type ram_type is array(0 to (2**address_width)-1) 
             of std_logic_vector(data_width-1 downto 0);             
     
-	signal RAM : ram_type;
+    signal RAM : ram_type;
 begin
 
-	process(Clk)
-	begin
-		if rising_edge(Clk) then
-			if WE = '1' then
-				RAM(to_integer(unsigned(Address))) <= DataIn;
-				DataOut <= DataIn;
-			else
-				DataOut <= RAM(to_integer(unsigned(Address)));
-			end if;
-		end if;
-	end process;
+    process(Clk)
+    begin
+        if rising_edge(Clk) then
+            if WE = '1' then
+                RAM(to_integer(unsigned(Address))) <= DataIn;
+                DataOut <= DataIn;
+            else
+                DataOut <= RAM(to_integer(unsigned(Address)));
+            end if;
+        end if;
+    end process;
 end Behavioral;
 ```
 [Figura 3. Código VHDL RAM write-first genérica]()
@@ -799,11 +801,11 @@ que se ha cargado en la memoria RAM implementada en la FPGA.
 Herramientas {#herramientas .Helvetica-titulo-2}
 ------------
 
-Para realizar tareas de depuración Vivado® proporciona varios tipos de
+Para realizar tareas de depuración Vivado&reg; proporciona varios tipos de
 "IP *cores"* que podemos añadir y conectar a nuestros diseños, algunos
 antes de la síntesis y otros post síntesis, cada uno para diferentes
 objetivos. Estos "IP cores" se manejan desde el *Hardware Manager* de
-Vivado® que ofrece una interfaz para interactuar con ellos.
+Vivado&reg; que ofrece una interfaz para interactuar con ellos.
 
 Core VIO {#core-vio .Helvetica-titulo-2}
 --------
