@@ -1,113 +1,14 @@
-inicialización de memorias desde ficheros de texto en fpga
-
-Tutorial para VHDL93 en Vivado y depuración de su contenido
+# Inicialización de memorias desde ficheros de texto en FPGA
+# Tutorial para VHDL93 en Vivado y depuración de su contenido
 
 Nicolás Ruiz Requejo (Autor)
 
-![](media/image1.png){width="1.3423129921259842in"
+![](media/image1.jpg){width="1.3423129921259842in"
 height="0.4696434820647419in"}
 
-Contenido {#contenido .Helvetica-Titulo-1}
-=========
+Aqui va la tabla de Contenido 
 
- {#section .TOC-Heading}
-
-[Objetivos 4](#objetivos)
-
-[Sobre la biblioteca VHDL para la gestión de ficheros
-4](#sobre-la-biblioteca-vhdl-para-la-gestión-de-ficheros)
-
-[Inicialización de RAM en VHDL93 5](#inicialización-de-ram-en-vhdl93)
-
-[Código para leer el fichero 7](#código-para-leer-el-fichero)
-
-[Simulación 10](#simulación)
-
-[Validación del diseño con Nexys4-DDR
-14](#validación-del-diseño-con-nexys4-ddr)
-
-[Depuración del hardware 18](#depuración-del-hardware)
-
-[Herramientas 18](#herramientas)
-
-[Core VIO 18](#core-vio)
-
-[Comprobando la RAM con VIO 18](#comprobando-la-ram-con-vio)
-
-[Referencias 27](#referencias)
-
-Tabla de figuras {#tabla-de-figuras .Helvetica-Titulo-1}
-================
-
-[Figura 1 5](#_Toc13855108)
-
-[Figura 2. Versión de VHDL 6](#_Toc13855109)
-
-[Figura 3. Código VHDL RAM write-first genérica 6](#_Ref11089911)
-
-[Figura 4. Datos para inicializar la RAM 7](#_Toc13855111)
-
-[Figura 5. Función para leer datos en el fichero de texto
-8](#_Toc13855112)
-
-[Figura 6. Código completo de VHDL93. 10](#_Ref11096583)
-
-[Figura 7. Crear nueva fuente para simulación. 10](#_Toc13855114)
-
-[Figura 8. Crear nueva fuente para simulación 11](#_Toc13855115)
-
-[Figura 9. definición de puertos vacía. 11](#_Toc13855116)
-
-[Figura 10. Código testbench para ram 13](#_Toc13855117)
-
-[Figura 11. Ejecutar simulación 13](#_Toc13855118)
-
-[Figura 12. Resultado simulación. 13](#_Toc13855119)
-
-[Figura 13. Parámetros **generic** por defecto. 14](#_Toc13855120)
-
-[Figura 14. Fichero de restricciones para RAM\_TEST\_93
-(RAM\_TEST\_93.xdc) 14](#_Toc13855121)
-
-[Figura 15. Síntesis e implementación. 15](#_Toc13855122)
-
-[Figura 16. Programación de la FPGA incluida en la placa Nexys4-DDR
-16](#_Toc13855123)
-
-[Figura 17. Contenido dirección 00h 16](#_Toc13855124)
-
-[Figura 18. Contenido dirección 01h 17](#_Toc13855125)
-
-[Figura 19. Abrir IP catalog 18](#_Toc13855126)
-
-[Figura 20. Seleccionar IP 19](#_Toc13855127)
-
-[Figura 21. Configurar IP VIO 20](#_Ref12482463)
-
-[Figura 22. Sonda de entrada. 20](#_Ref12484955)
-
-[Figura 23. Sonda de salida. 20](#_Ref12484963)
-
-[Figura 24. Generate Outputs products. 21](#_Toc13855131)
-
-[Figura 25. IP generada. 21](#_Ref12485383)
-
-[Figura 26. Plantilla instanciación. 22](#_Ref12485654)
-
-[Figura 27. RAM\_WF\_TOP.vhd 23](#_Ref12487385)
-
-[Figura 28. Program bitstream. 23](#_Toc13855135)
-
-[Figura 29. Serial I/O Analyzer. 24](#_Ref12496588)
-
-[Figura 30. Añadir debug probes. 25](#_Ref12496804)
-
-[Figura 31. Contenido de la dirección 0h. 26](#_Toc13855138)
-
-[Figura 32. Contenido de la dirección 3h 26](#_Toc13855139)
-
-Objetivos {#objetivos .Helvetica-Titulo-1}
-=========
+## Objetivos
 
 El presente tutorial tiene los siguientes objetivos:
 
@@ -119,8 +20,7 @@ El presente tutorial tiene los siguientes objetivos:
 -   Uso de un "IP core" de depuración, VIO, para examinar el contenido
     de la memoria RAM implementada en tiempo de ejecución.
 
-Sobre la biblioteca VHDL para la gestión de ficheros {#sobre-la-biblioteca-vhdl-para-la-gestión-de-ficheros .Helvetica-Titulo-1}
-====================================================
+## Sobre la biblioteca VHDL para la gestión de ficheros 
 
 Los mecanismos presentes incluyen:
 
@@ -147,8 +47,7 @@ herramientas permiten la lectura de ficheros para síntesis. A lo largo
 de este tutorial se muestran las formas de realizarlo en Vivado® con
 proyectos en VHDL93 y VHDL2008.
 
-Inicialización de RAM en VHDL93 {#inicialización-de-ram-en-vhdl93 .Helvetica-Titulo-1}
-===============================
+## Inicialización de RAM en VHDL93 
 
 Comenzamos creando un nuevo proyecto en Vivado® *File \> Project \> New
 \> next*
@@ -161,90 +60,54 @@ Artix-7 xc7a100tcsg324-1; finalizamos.
 
 Nos pedirá introducir las definiciones de puertos, lo ignoramos.
 
-![](media/image2.png){width="5.905555555555556in"
-height="4.261111111111111in"}
-
-[]{#_Toc13855108 .anchor}Figura 1
+![Figura 1](media/image2.jpg "Figura 1")
 
 Cuando creamos un fichero VHDL, por defecto Vivado® lo crea para
 sintetizarlo según el estándar VHDL93. Podemos comprobarlos mirando las
 propiedades del fichero, ver figura 2.
 
-![](media/image3.png){width="4.608333333333333in"
-height="3.7692432195975503in"}
-
-[]{#_Toc13855109 .anchor}Figura 2. Versión de VHDL
+![Figura 2. Versión de VHDL](media/image3.jpg)
 
 Para este tutorial, utilizaremos la descripción de una memoria RAM de
 tipo *write-first*. Copie el siguiente código:
 
-+----------------------------------------------------------------------+
-| **library** IEEE**;**                                                |
-|                                                                      |
-| **use** IEEE**.**STD\_LOGIC\_1164**.ALL;**                           |
-|                                                                      |
-| **use** IEEE**.**NUMERIC\_STD**.ALL;**                               |
-|                                                                      |
-| **entity** RAM\_WF\_93 **is**                                        |
-|                                                                      |
-| **generic** **(**                                                    |
-|                                                                      |
-| address\_width **:** integer **:=** 4**;**                           |
-|                                                                      |
-| data\_width **:** integer **:=** 8**);**                             |
-|                                                                      |
-| **Port** **(** DataIn **:** **in**                                   |
-| std\_logic\_vector**(**data\_width**-**1 **downto** 0**);**          |
-|                                                                      |
-| WE **:** **in** std\_logic**;**                                      |
-|                                                                      |
-| Address **:** **in** std\_logic\_vector**(**address\_width**-**1     |
-| **downto** 0**);**                                                   |
-|                                                                      |
-| DataOut **:** **out** std\_logic\_vector**(**data\_width**-**1       |
-| **downto** 0**);**                                                   |
-|                                                                      |
-| CLK **:** **in** std\_logic**);**                                    |
-|                                                                      |
-| **end** RAM\_WF\_93**;**                                             |
-|                                                                      |
-| **architecture** Behavioral **of** RAM\_WF\_93 **is**                |
-|                                                                      |
-| **type** ram\_type **is** **array(**0 **to**                         |
-| **(**2**\*\***address\_width**)-**1**)**                             |
-|                                                                      |
-| **of** std\_logic\_vector**(**data\_width**-**1 **downto** 0**);**   |
-|                                                                      |
-| **signal** RAM **:** ram\_type**;**                                  |
-|                                                                      |
-| **begin**                                                            |
-|                                                                      |
-| **process(**Clk**)**                                                 |
-|                                                                      |
-| **begin**                                                            |
-|                                                                      |
-| **if** **rising\_edge(**Clk**)** **then**                            |
-|                                                                      |
-| **if** WE **=** \'1\' **then**                                       |
-|                                                                      |
-| RAM**(to\_integer(**unsigned**(**Address**)))** **\<=** DataIn**;**  |
-|                                                                      |
-| DataOut **\<=** DataIn**;**                                          |
-|                                                                      |
-| **else**                                                             |
-|                                                                      |
-| DataOut **\<=** RAM**(to\_integer(**unsigned**(**Address**)));**     |
-|                                                                      |
-| **end** **if;**                                                      |
-|                                                                      |
-| **end** **if;**                                                      |
-|                                                                      |
-| **end** **process;**                                                 |
-|                                                                      |
-| **end** Behavioral**;**                                              |
-+----------------------------------------------------------------------+
+```VHDL
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
-[]{#_Ref11089911 .anchor}Figura 3. Código VHDL RAM write-first genérica
+entity RAM_WF_93 is
+    generic (
+           address_width : integer := 4; 
+           data_width : integer := 8);
+    Port ( DataIn : in  std_logic_vector(data_width-1 downto 0);
+           WE : in  std_logic;
+           Address : in  std_logic_vector(address_width-1 downto 0);
+           DataOut : out  std_logic_vector(data_width-1 downto 0);
+           CLK : in  std_logic);
+end RAM_WF_93;
+
+architecture Behavioral of RAM_WF_93 is
+    type ram_type is array(0 to (2**address_width)-1) 
+            of std_logic_vector(data_width-1 downto 0);             
+    
+	signal RAM : ram_type;
+begin
+
+	process(Clk)
+	begin
+		if rising_edge(Clk) then
+			if WE = '1' then
+				RAM(to_integer(unsigned(Address))) <= DataIn;
+				DataOut <= DataIn;
+			else
+				DataOut <= RAM(to_integer(unsigned(Address)));
+			end if;
+		end if;
+	end process;
+end Behavioral;
+```
+[Figura 3. Código VHDL RAM write-first genérica]()
 
 El fichero de texto que vamos a usar para inicializar la RAM, tendrá
 tantas líneas de texto como direcciones tenga la RAM inferida y cada
@@ -260,7 +123,7 @@ El fichero o está en binario o en hexadecimal, pero no podemos mezclar
 ambos. Para nuestro ejemplo usaremos el siguiente contenido hexadecimal,
 considerando una RAM de 16x8:
 
-![](media/image4.png){width="1.225in" height="3.7600699912510938in"}
+![](media/image4.jpg){width="1.225in" height="3.7600699912510938in"}
 
 []{#_Toc13855111 .anchor}Figura 4. Datos para inicializar la RAM
 
@@ -564,14 +427,14 @@ Simulación {#simulación .Helvetica-titulo-2}
 Vamos a simular nuestro diseño, para ello añadimos un nuevo fichero
 fuente para simulación:
 
-![](media/image5.png){width="6.033333333333333in"
+![](media/image5.jpg){width="6.033333333333333in"
 height="3.1044247594050742in"}
 
 []{#_Toc13855114 .anchor}Figura 7. Crear nueva fuente para simulación.
 
 Le llamaremos "RAM\_WF\_93\_tb":
 
-![](media/image6.png){width="5.783333333333333in"
+![](media/image6.jpg){width="5.783333333333333in"
 height="3.864757217847769in"}
 
 []{#_Toc13855115 .anchor}Figura 8. Crear nueva fuente para simulación
@@ -579,7 +442,7 @@ height="3.864757217847769in"}
 En la ventana con el asistente, dejamos las definiciones de puertos
 vacías y hacemos click en el botón "**yes" del cuadro de diálogo**:
 
-![](media/image7.png){width="2.9916666666666667in"
+![](media/image7.jpg){width="2.9916666666666667in"
 height="1.3996489501312337in"}
 
 []{#_Toc13855116 .anchor}Figura 9. definición de puertos vacía.
@@ -767,7 +630,7 @@ En el parámetro ***datafile*** del ***generic map*** debes poner la ruta
 donde se encuentra el fichero con el que quieres inicializar la memoria,
 en nuestro caso es "D:\\mem.dat". Y ejecutamos la simulación:
 
-![](media/image8.png){width="3.4993121172353456in" height="1.825in"}
+![](media/image8.jpg){width="3.4993121172353456in" height="1.825in"}
 
 []{#_Toc13855118 .anchor}Figura 11. Ejecutar simulación
 
@@ -775,7 +638,7 @@ Podremos observar en la señal "DataOut" los datos almacenados en cada
 dirección de la memoria RAM, que son los mismos que se escribieron en el
 fichero de texto:
 
-![](media/image9.png){width="5.891666666666667in"
+![](media/image9.jpg){width="5.891666666666667in"
 height="3.1083333333333334in"}
 
 []{#_Toc13855119 .anchor}Figura 12. Resultado simulación.
@@ -789,7 +652,7 @@ restricciones. Podemos usar el siguiente y dejaremos los parámetros
 recordando proporcionar un camino válido para el parámetro
 ***datafile***.
 
-![](media/image10.png){width="5.316666666666666in"
+![](media/image10.jpg){width="5.316666666666666in"
 height="0.9166666666666666in"}
 
 []{#_Toc13855120 .anchor}Figura 13. Parámetros **generic** por defecto.
@@ -891,8 +754,8 @@ RAM\_TEST\_93 (RAM\_TEST\_93.xdc)
 Una vez añadido el fichero de restricciones, ejecutamos la síntesis y la
 implementación y comprobamos que no haya errores:
 
-![](media/image11.png){width="2.494323053368329in"
-height="3.2in"}![](media/image12.png){width="5.905555555555556in"
+![](media/image11.jpg){width="2.494323053368329in"
+height="3.2in"}![](media/image12.jpg){width="5.905555555555556in"
 height="1.4659722222222222in"}
 
 []{#_Toc13855122 .anchor}Figura 15. Síntesis e implementación.
@@ -902,7 +765,7 @@ debug \>Generate Bitstream,* cuando finalice abrimos la herramienta
 *Hardware manager*. Conectamos la placa al PC y seguimos los siguientes
 pasos:
 
-![](media/image13.png){width="5.891666666666667in"
+![](media/image13.jpg){width="5.891666666666667in"
 height="3.3916666666666666in"}
 
 []{#_Toc13855123 .anchor}Figura 16. Programación de la FPGA incluida en
@@ -970,7 +833,7 @@ Comprobando la RAM con VIO {#comprobando-la-ram-con-vio .Helvetica-titulo-2}
 Abrimos el proyecto del apartado anterior, en el *Flow Navigator*
 abrimos *IP catalog*.
 
-![](media/image16.png){width="2.066666666666667in"
+![](media/image16.jpg){width="2.066666666666667in"
 height="1.8666666666666667in"}
 
 []{#_Toc13855126 .anchor}Figura 19. Abrir IP catalog
@@ -981,7 +844,7 @@ Debug*
 Elegimos el elemento *VIO (Virtual Input/Output)* y pulsamos el botón de
 la llave inglesa *Customize IP:*
 
-![](media/image17.png){width="5.905555555555556in"
+![](media/image17.jpg){width="5.905555555555556in"
 height="3.576388888888889in"}
 
 []{#_Toc13855127 .anchor}Figura 20. Seleccionar IP
@@ -1008,17 +871,17 @@ Para el ejemplo que nos ocupa, vamos a utilizar una sonda de entrada de
 de salida de 4 bits de ancho para la entrada de direcciones de la RAM,
 "Address".
 
-![](media/image18.png){width="5.905555555555556in"
+![](media/image18.jpg){width="5.905555555555556in"
 height="4.852083333333334in"}
 
 []{#_Ref12482463 .anchor}Figura 21. Configurar IP VIO
 
-![](media/image19.png){width="5.905555555555556in"
+![](media/image19.jpg){width="5.905555555555556in"
 height="0.9666666666666667in"}
 
 []{#_Ref12484955 .anchor}Figura 22. Sonda de entrada.
 
-![](media/image20.png){width="5.905555555555556in" height="1.1in"}
+![](media/image20.jpg){width="5.905555555555556in" height="1.1in"}
 
 []{#_Ref12484963 .anchor}Figura 23. Sonda de salida.
 
@@ -1027,11 +890,11 @@ G*enerate Outputs Products* dejamos marcada la opción *Out of context
 per IP* y pulsamos Generate. Tendremos que esperar hasta que aparezca el
 mensaje de la *Figura 25. IP generada.*
 
-![](media/image21.png){width="3.586881014873141in" height="4.625in"}
+![](media/image21.jpg){width="3.586881014873141in" height="4.625in"}
 
 []{#_Toc13855131 .anchor}Figura 24. Generate Outputs products.
 
-![](media/image22.png){width="4.841666666666667in"
+![](media/image22.jpg){width="4.841666666666667in"
 height="1.5269695975503061in"}
 
 []{#_Ref12485383 .anchor}Figura 25. IP generada.
@@ -1041,7 +904,7 @@ ventana ***Sources***, pestaña ***IP Source***, si desplegamos el módulo
 "vio\_0", podemos abrir la plantilla de instanciación del componente,
 con extensión vho.
 
-![](media/image23.png){width="4.25in" height="3.025in"}
+![](media/image23.jpg){width="4.25in" height="3.025in"}
 
 []{#_Ref12485654 .anchor}Figura 26. Plantilla instanciación.
 
@@ -1157,7 +1020,7 @@ correctamente, procedemos a programar la FPGA pulsando en *Program
 Device. A*utomáticamente detecta el fichero *bitstream* y un fichero
 *debug probe* que tiene extensión *.ltx*, pulsamos *Program.*
 
-![](media/image24.png){width="5.35in" height="2.860589457567804in"}
+![](media/image24.jpg){width="5.35in" height="2.860589457567804in"}
 
 []{#_Toc13855135 .anchor}Figura 28. Program bitstream.
 
@@ -1165,7 +1028,7 @@ Automáticamente se abrirá en el *Hardware Manager* la vista del *Serial
 I/O Analyzer* que podemos observar en la *Figura 29. Serial I/O
 Analyzer.*
 
-![](media/image25.png){width="5.905555555555556in"
+![](media/image25.jpg){width="5.905555555555556in"
 height="2.8819444444444446in"}
 
 []{#_Ref12496588 .anchor}Figura 29. Serial I/O Analyzer.
@@ -1174,7 +1037,7 @@ Pulsando sobre el botón + se desplegará un menú para seleccionar las
 sondas que se quiera mostrar. Seleccionamos las dos señales que se
 muestran y pulsamos OK como en la *Figura 30. Añadir debug probes.*
 
-![](media/image26.png){width="4.649411636045494in" height="6.175in"}
+![](media/image26.jpg){width="4.649411636045494in" height="6.175in"}
 
 []{#_Ref12496804 .anchor}Figura 30. Añadir debug probes.
 
@@ -1190,12 +1053,12 @@ en *dbg\_in\_DataOut.*
 *Las siguientes imágenes muestran diferentes estímulos y la respuesta
 conseguida en cada caso.*
 
-![](media/image27.png){width="5.441666666666666in"
+![](media/image27.jpg){width="5.441666666666666in"
 height="4.633333333333334in"}
 
 []{#_Toc13855138 .anchor}Figura 31. Contenido de la dirección 0h.
 
-![](media/image28.png){width="5.458333333333333in" height="3.75in"}
+![](media/image28.jpg){width="5.458333333333333in" height="3.75in"}
 
 []{#_Toc13855139 .anchor}Figura 32. Contenido de la dirección 3h
 
